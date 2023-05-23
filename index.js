@@ -2,6 +2,11 @@ import { applyMiddleware, createStore } from "redux"
 import { } from "redux"
 import logger from "redux-logger";
 
+//action name constant
+const inc = 'increment'
+const dec = 'decrement'
+const incByAmt = 'incrementByAmount'
+
 const store = createStore(reducer, applyMiddleware(logger.default));
 
 const history = []
@@ -24,6 +29,17 @@ store.subscribe(() => {
     history.push(store.getState())
     console.log(history)
 })
+
+// action creator
+function increment() {
+    return { type: inc }
+}
+function decrement() {
+    return { type: dec }
+}
+function incrementByAmount(value) {
+    return { type: incByAmt, payload: value }
+}
 setInterval(() => {
-    store.dispatch({ type: "incrementByAmount", payload: 4 })
+    store.dispatch(incrementByAmount(20))
 }, 2000)
